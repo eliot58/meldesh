@@ -11,7 +11,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/register/register.page').then( m => m.RegisterPage)
   },
   {
-    path: 'password-reset',
+    path: 'password-reset/:email',
     loadComponent: () => import('./features/auth/password-reset/password-reset.page').then( m => m.PasswordResetPage)
   },
   {
