@@ -1,0 +1,30 @@
+.verify-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .subtitle {
+        margin: 10px 0px;
+        font-size: 14px;
+        font-weight: 300;
+        text-align: center;
+    }
+
+    .icon-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+
+    .mail {
+        font-size: 70px;
+        color: #2196f3;
+    }
+}

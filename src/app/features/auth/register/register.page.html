@@ -1,0 +1,56 @@
+<ion-content class="register-page">
+  <div class="container">
+    <h2>Добро пожаловать</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">person</span>
+        <ion-input formControlName="fullName" type="text" placeholder="ФИО" class="custom-input"></ion-input>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">calendar_today</span>
+        <ion-input formControlName="age" type="number" placeholder="Возраст" class="custom-input"></ion-input>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">group</span>
+        <ion-select formControlName="group" placeholder="Тип пользователя" class="custom-input">
+          <ion-select-option value="school">школьник(ца)</ion-select-option>
+          <ion-select-option value="student">студент(ка)</ion-select-option>
+          <ion-select-option value="other">другое</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">mail</span>
+        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input"></ion-input>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">lock</span>
+        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Пароль" class="custom-input"></ion-input>
+        <span class="material-icons-outlined input-icon end" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">lock</span>
+        <ion-input formControlName="passwordConfirm" [type]="showPassword ? 'text' : 'password'" placeholder="Повторите пароль" class="custom-input"></ion-input>
+        <span class="material-icons-outlined input-icon end" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+      </div>
+
+      <ion-button expand="block" type="submit">
+        Зарегистрироваться
+      </ion-button>
+    </form>
+
+    <div class="auth-text">
+      <span>Уже есть аккаунт? <a href="#">Войти</a></span>
+    </div>
+  </div>
+</ion-content>

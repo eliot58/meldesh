@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="events-page">
+  <div class="container">
+    <div class="input-wrapper">
+      <span class="material-icons-outlined input-icon start">search</span>
+      <ion-input type="text" placeholder="Поиск" class="custom-input"></ion-input>
+    </div>
+
+    <div *ngFor="let event of events" class="event-card" style="margin-top: 10px;">
+      <div class="event-info">
+        <h3 class="event-title">{{ event.title }}</h3>
+        <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
+        <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
+        <ion-button size="small" fill="outline" class="details-button" [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+      </div>
+      <div class="event-image">
+        <img [src]="event.image" alt="Картинка события" />
+      </div>
+    </div>
+    
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="bottom-app-bar">
+    <div class="bottom-nav">
+      <ion-button fill="clear" [routerLink]="['/']">
+        <span class="material-icons-outlined">school</span>
+      </ion-button>
+      <ion-button fill="clear" disabled>
+        <span class="material-icons active">menu_book</span>
+      </ion-button>
+      <ion-button fill="clear" [routerLink]="['/profile']">
+        <span class="material-icons-outlined">person</span>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

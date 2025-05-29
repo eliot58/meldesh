@@ -1,3 +1,17 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((color: (theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+}
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -35,3 +49,154 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container {
+  height: 100vh;
+  background: #F3F5FD;
+  padding: 15px;
+}
+
+.back-button, .like-button {
+  border: none;
+  background-color: inherit;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.back-button span, .like-button span {
+  font-size: 24px;
+}
+
+.bottom-app-bar {
+  --background: #fff;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  height: 64px;
+}
+
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
+
+  ion-input.custom-input,
+  ion-select.custom-input {
+    --padding-start: 40px;
+    --padding-end: 44px;
+    --border-radius: 12px;
+    font-size: 14px;
+  }
+
+  ion-select::part(icon) {
+    display: none;
+  }
+
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    color: grey;
+    font-size: 16px;
+
+    &.start {
+      left: 12px;
+    }
+
+    &.end {
+      right: 12px;
+      cursor: pointer;
+    }
+  }
+}
+
+.auth-text {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+
+  a {
+    color: #2196f3;
+    font-weight: 500;
+    text-decoration: none;
+  }
+}
+
+.event-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  max-height: 200px;
+  overflow: hidden;
+
+  .event-info {
+    flex: 1;
+    margin-right: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .event-title {
+      font-size: 14px;
+      margin: 0 0 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event-company,
+    .event-deadline {
+      font-size: 14px;
+      margin: 4px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .details-button {
+      margin-top: 8px;
+    }
+  }
+
+  .event-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.bottom-nav .material-icons-outlined {
+  font-size: 24px;
+  color: #888;
+}
+
+.bottom-nav .material-icons-outlined.active {
+  color: #2196f3;
+}

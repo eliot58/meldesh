@@ -1,0 +1,35 @@
+<ion-content class="login-page">
+  <div class="container">
+    <h2>С возвращением!</h2>
+    <p class="subtitle">Войдите в свой аккаунт, чтобы продолжить</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">mail</span>
+        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input">
+        </ion-input>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">lock</span>
+        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Пароль" class="custom-input">
+        </ion-input>
+        <span class="material-icons-outlined input-icon end" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+      </div>
+
+      <div class="forgot-password">
+        <a href="#">Забыли пароль?</a>
+      </div>
+
+      <ion-button expand="block" type="submit">
+        Войти
+      </ion-button>
+    </form>
+
+    <div class="auth-text">
+      <span>Еще нет аккаунта? <a href="#">Зарегистрироваться</a></span>
+    </div>
+  </div>
+</ion-content>

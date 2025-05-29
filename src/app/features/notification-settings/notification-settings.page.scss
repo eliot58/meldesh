@@ -1,0 +1,25 @@
+.notification-settings-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .notification-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 10px;
+    }
+
+    ion-item {
+        display: flex !important;
+        align-items: center !important;
+        --padding-start: 0;
+        --inner-padding-end: 0;
+    }
+
+    .icon {
+        font-size: 24px;
+        color: #1976d2;
+        margin-right: 16px;
+    }
+}
