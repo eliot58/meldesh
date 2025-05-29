@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonButtons, IonTitle } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonButtons, IonTitle, CommonModule, FormsModule]
 })
 export class EventPage implements OnInit {
 

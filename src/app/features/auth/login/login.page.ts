@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { Router } from '@angular/router';
+import { IonContent, IonInput, IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonContent, IonButton, IonInput, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class LoginPage {
   showPassword = false;

@@ -26,7 +26,6 @@
         </div>
       </div>
       
-
       <div class="input-wrapper">
         <span class="material-icons-outlined input-icon start">person</span>
         <ion-input formControlName="fullName" type="text" placeholder="ФИО" class="custom-input"></ion-input>
@@ -48,7 +47,7 @@
 
       <div class="input-wrapper">
         <span class="material-icons-outlined input-icon start">mail</span>
-        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input"></ion-input>
+        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input" readonly tabindex="-1"></ion-input>
       </div>
 
       <ion-button expand="block" type="button" [routerLink]="['/change-password']">

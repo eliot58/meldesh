@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonInput, IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-password-reset',
   templateUrl: './password-reset.page.html',
   styleUrls: ['./password-reset.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonContent, IonInput, IonButton, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class PasswordResetPage {
   showPassword = false;
