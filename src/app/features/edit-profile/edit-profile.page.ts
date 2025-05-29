@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
-import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
-import { IonicModule } from '@ionic/angular';
+// import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonSelect, IonSelectOption, NavController} from '@ionic/angular/standalone';
+import { IonicModule, NavController } from '@ionic/angular';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-profile',
@@ -16,7 +17,9 @@ import { IonicModule } from '@ionic/angular';
 export class EditProfilePage implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private navCtrl: NavController,
+    private http: HttpClient
   ) { }
 
   form = this.fb.group({
@@ -28,7 +31,7 @@ export class EditProfilePage implements OnInit {
 
   async ngOnInit() {
     const user = await this.authService.getUser();
-    
+
     if (user) {
       this.form.patchValue({
         fullName: user.full_name || '',
@@ -39,13 +42,36 @@ export class EditProfilePage implements OnInit {
     }
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      console.log(this.form.value);
-    }
+  async onSubmit() {
+    if (this.form.invalid) return;
+
+    const token = await this.authService.getAccessToken();
+    if (!token) return;
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    const body = {
+      full_name: this.form.value.fullName,
+      age: this.form.value.age,
+      type: this.form.value.group,
+    };
+
+    this.http.put('http://109.73.194.192:8000/api/v1/auth/user/', body, { headers })
+      .subscribe({
+        next: async (updatedUser) => {
+          await this.authService.setUser(updatedUser);
+          this.navCtrl.back();
+        },
+        error: (error) => {
+          console.error('Ошибка при обновлении профиля:', error);
+        }
+      });
   }
 
-  goBack() {
 
+  goBack() {
+    this.navCtrl.back();
   }
 }

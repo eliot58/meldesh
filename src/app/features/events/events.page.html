@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      
+    <ion-title class="ion-text-center">
+      {{ getEventsTitle() }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +9,7 @@
 
 <ion-content class="events-page">
   <div class="container">
-    <div class="input-wrapper">
+    <div class="input-wrapper" *ngIf="type === 'course' || type === 'event'">
       <span class="material-icons-outlined input-icon start">search</span>
       <ion-input type="text" placeholder="Поиск" class="custom-input"></ion-input>
     </div>
@@ -19,18 +19,18 @@
         <h3 class="event-title">{{ event.title }}</h3>
         <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
         <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
-        <ion-button size="small" fill="outline" class="details-button" [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+        <ion-button size="small" fill="outline" class="details-button"
+          [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
       </div>
       <div class="event-image">
         <img [src]="event.image" alt="Картинка события" />
       </div>
     </div>
-    
 
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="type === 'course'">
   <ion-toolbar class="bottom-app-bar">
     <div class="bottom-nav">
       <ion-button fill="clear" [routerLink]="['/']">

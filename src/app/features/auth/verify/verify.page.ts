@@ -17,11 +17,7 @@ export class VerifyPage {
   });
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
-
-  goBack() {
-    
-  }
-
+  
   onSubmit() {
     if (this.form.valid) {
       const { email } = this.form.value;

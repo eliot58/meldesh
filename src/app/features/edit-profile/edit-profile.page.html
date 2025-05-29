@@ -17,7 +17,7 @@
 </ion-header>
 
 
-<ion-content class="edit-profile-page">
+<ion-content class="edit-profile-page" [scrollY]="false">
   <div class="container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="avatar-container">

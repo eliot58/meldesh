@@ -37,6 +37,26 @@
         cursor: pointer;
     }
 
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 5px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .see-all-link {
+        font-size: 14px;
+        color: #3880ff;
+        text-decoration: none;
+    }
+
+
     ion-segment {
         background: #fff;
         margin-top: 10px;

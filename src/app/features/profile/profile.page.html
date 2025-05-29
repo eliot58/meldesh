@@ -10,11 +10,11 @@
 <ion-content class="profile-page" [scrollY]="false">
   <div class="container">
     <div class="profile-block">
-      <div class="avatar-wrapper">
-        <div class="initials-avatar">A</div>
+      <div class="avatar-wrapper" *ngIf="name">
+        <div class="initials-avatar">{{ name[0] }}</div>
       </div>
-      <h2 class="name">{{name}}</h2>
-      <p class="email">{{email}}</p>
+      <h2 class="name">{{ name }}</h2>
+      <p class="email">{{ email }}</p>
     </div>
 
     <div class="list-menu">
@@ -28,7 +28,7 @@
         <ion-label>Уведомления</ion-label>
       </ion-item>
 
-      <ion-item button [routerLink]="['/events', 'favorites']">
+      <ion-item button [routerLink]="['/events', 'favorite']">
         <span slot="start" class="icons material-icons-outlined">favorite_border</span>
         <ion-label>Избранные</ion-label>
       </ion-item>

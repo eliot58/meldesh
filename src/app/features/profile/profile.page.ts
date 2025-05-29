@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -11,7 +11,7 @@ import { IonContent, IonHeader, IonToolbar, IonTitle, IonFooter, IonButton, IonI
   standalone: true,
   imports: [IonContent, IonHeader, IonToolbar, CommonModule, RouterModule, IonTitle, IonItem, IonLabel, IonFooter, IonButton,]
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   constructor(
     private router: Router,
     private authService: AuthService
@@ -20,7 +20,7 @@ export class ProfilePage implements OnInit {
   name: string | null = null;
   email: string | null = null;
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     const user = await this.authService.getUser();
     this.name = user.full_name;
     this.email = user.email;

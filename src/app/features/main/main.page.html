@@ -1,65 +1,79 @@
-<ion-content class="main-page" [scrollY]="false">
-    <div class="container">
-        <div class="header-section">
-            <div class="greeting-texts">
-                <h2 class="greeting">Привет, {{name}}</h2>
-                <p class="subtitle">Найди своё будущее вместе с нами</p>
+<ng-container *ngIf="isLoading; else contentLoaded">
+    <div class="loader-wrapper">
+        <ion-spinner name="crescent"></ion-spinner>
+    </div>
+</ng-container>
+
+
+<ng-template #contentLoaded>
+    <ion-content class="main-page" [scrollY]="false">
+        <div class="container">
+            <div class="header-section">
+                <div class="greeting-texts">
+                    <h2 class="greeting">Привет, {{name}}</h2>
+                    <p class="subtitle">Найди своё будущее вместе с нами</p>
+                </div>
+                <span class="material-icons notification-icon" [routerLink]="['/events', 'unviewed']">notifications</span>
             </div>
-            <span class="material-icons notification-icon">notifications</span>
-        </div>
-
-
-        <div class="input-wrapper">
-            <span class="material-icons-outlined input-icon start">search</span>
-            <ion-input type="text" placeholder="Поиск" class="custom-input"></ion-input>
-        </div>
-
-        <swiper-container [modules]="swiperModules" [slidesPerView]="1" [loop]="true">
-            <swiper-slide *ngFor="let event of events">
-                <div class="event-card">
+    
+    
+            <div class="input-wrapper">
+                <span class="material-icons-outlined input-icon start">search</span>
+                <ion-input type="text" placeholder="Поиск" class="custom-input"></ion-input>
+            </div>
+    
+            <div class="section-header">
+                <h3 class="section-title">Мероприятия</h3>
+                <a [routerLink]="['/events', 'event']" class="see-all-link">Смотреть все</a>
+            </div>
+    
+            <swiper-container [modules]="swiperModules" [slidesPerView]="1" [loop]="true">
+                <swiper-slide *ngFor="let event of events">
+                    <div class="event-card">
+                        <div class="event-info">
+                            <h3 class="event-title">{{ event.title }}</h3>
+                            <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
+                            <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
+                            <ion-button size="small" fill="outline" class="details-button"
+                                [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+                        </div>
+                        <div class="event-image">
+                            <img [src]="event.image" alt="Картинка события" />
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper-container>
+    
+    
+            <ion-segment [(ngModel)]="selectedTab" class="custom-tabs">
+                <ion-segment-button value="grant">
+                    <ion-label>Стипендии</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="internship">
+                    <ion-label>Стажировки</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="olympiad">
+                    <ion-label>Олимпиады</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+    
+            <div class="scrollable-cards">
+                <div *ngFor="let event of currentEvents" class="event-card" style="margin-top: 10px;">
                     <div class="event-info">
                         <h3 class="event-title">{{ event.title }}</h3>
                         <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
                         <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
-                        <ion-button size="small" fill="outline" class="details-button" [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+                        <ion-button size="small" fill="outline" class="details-button"
+                            [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
                     </div>
                     <div class="event-image">
                         <img [src]="event.image" alt="Картинка события" />
                     </div>
                 </div>
-            </swiper-slide>
-        </swiper-container>
-
-
-        <ion-segment [(ngModel)]="selectedTab" class="custom-tabs">
-            <ion-segment-button value="grant">
-                <ion-label>Стипендии</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="internship">
-                <ion-label>Стажировки</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="olympiad">
-                <ion-label>Олимпиады</ion-label>
-            </ion-segment-button>
-        </ion-segment>
-
-        <div class="scrollable-cards">
-            <div *ngFor="let event of currentEvents" class="event-card" style="margin-top: 10px;">
-                <div class="event-info">
-                    <h3 class="event-title">{{ event.title }}</h3>
-                    <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
-                    <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
-                    <ion-button size="small" fill="outline" class="details-button" [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
-                </div>
-                <div class="event-image">
-                    <img [src]="event.image" alt="Картинка события" />
-                </div>
             </div>
         </div>
-
-
-    </div>
-</ion-content>
+    </ion-content>
+</ng-template>
 
 <ion-footer>
     <ion-toolbar class="bottom-app-bar">

@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="event">
   <ion-toolbar>
     <ion-buttons slot="start">
       <button class="back-button" (click)="goBack()">
@@ -18,7 +18,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="event-page" *ngIf="event" [scrollY]="false">
+<ion-content class="event-page" *ngIf="event">
   <div class="container">
     <img class="event-image" [src]="event.image" alt="Изображение курса" />
 

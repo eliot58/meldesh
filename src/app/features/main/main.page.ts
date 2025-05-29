@@ -26,6 +26,8 @@ export class MainPage implements OnInit {
 
   selectedTab: string = 'grant';
 
+  isLoading: boolean = true;
+
   events: any[] = [];
   internships: any[] = [];
   olympiads: any[] = [];
@@ -51,12 +53,19 @@ export class MainPage implements OnInit {
     const olympiad$ = this.http.get<any>('http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=olympiad', { headers });
     const grant$ = this.http.get<any>('http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=grant', { headers });
 
-    forkJoin([event$, internship$, olympiad$, grant$]).subscribe(([eventRes, internshipRes, olympiadRes, grantRes]) => {
-      this.events = eventRes.results || [];
-      this.internships = internshipRes.results || [];
-      this.olympiads = olympiadRes.results || [];
-      this.grants = grantRes.results || [];
+    forkJoin([event$, internship$, olympiad$, grant$]).subscribe({
+      next: ([eventRes, internshipRes, olympiadRes, grantRes]) => {
+        this.events = eventRes.results || [];
+        this.internships = internshipRes.results || [];
+        this.olympiads = olympiadRes.results || [];
+        this.grants = grantRes.results || [];
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
     });
+    
   }
 
   get currentEvents() {
