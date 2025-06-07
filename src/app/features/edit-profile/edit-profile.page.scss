@@ -1,26 +1,20 @@
-.edit-profile-page {
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.initials-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #2196f3;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .avatar-wrapper {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 16px;
-    }
-
-    .initials-avatar {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        background-color: #2196f3;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 48px;
-        font-weight: bold;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+    font-size: 48px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

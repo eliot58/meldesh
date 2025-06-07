@@ -1,4 +1,4 @@
-<ion-content class="login-page">
+<ion-content>
   <div class="container">
     <h2>С возвращением!</h2>
     <p class="subtitle">Войдите в свой аккаунт, чтобы продолжить</p>
@@ -20,7 +20,7 @@
       </div>
 
       <div class="forgot-password">
-        <a href="#">Забыли пароль?</a>
+        <a (click)="goToForgotPassword()">Забыли пароль?</a>
       </div>
 
       <ion-button expand="block" type="submit">
@@ -29,7 +29,7 @@
     </form>
 
     <div class="auth-text">
-      <span>Еще нет аккаунта? <a href="#">Зарегистрироваться</a></span>
+      <span>Еще нет аккаунта? <a (click)="goToRegister()">Зарегистрироваться</a></span>
     </div>
   </div>
 </ion-content>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonInput, IonButton, IonSegment, IonSegmentButton, IonLabel, IonFooter, IonToolbar } from '@ionic/angular/standalone';
 import { IonicSlides } from '@ionic/angular/standalone';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -13,13 +13,14 @@ import { AuthService } from 'src/app/shared/service/auth.service';
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
   standalone: true,
-  imports: [IonContent, IonInput, IonButton, IonSegment, IonSegmentButton, IonLabel, IonFooter, IonToolbar,  CommonModule, FormsModule, RouterModule],
+  imports: [IonContent, IonInput, IonButton, IonSegment, IonSegmentButton, IonLabel, IonFooter, IonToolbar,  CommonModule, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MainPage implements OnInit {
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   swiperModules = [IonicSlides];
@@ -48,10 +49,10 @@ export class MainPage implements OnInit {
       'Authorization': `Bearer ${token}`
     });
 
-    const event$ = this.http.get<any>('http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=event', { headers });
-    const internship$ = this.http.get<any>('http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=internship', { headers });
-    const olympiad$ = this.http.get<any>('http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=olympiad', { headers });
-    const grant$ = this.http.get<any>('http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=grant', { headers });
+    const event$ = this.http.get<any>('https://meldesh.kg/api/v1/events/?limit=4&types_event=event', { headers });
+    const internship$ = this.http.get<any>('https://meldesh.kg/api/v1/events/?limit=4&types_event=internship', { headers });
+    const olympiad$ = this.http.get<any>('https://meldesh.kg/api/v1/events/?limit=4&types_event=olympiad', { headers });
+    const grant$ = this.http.get<any>('https://meldesh.kg/api/v1/events/?limit=4&types_event=grant', { headers });
 
     forkJoin([event$, internship$, olympiad$, grant$]).subscribe({
       next: ([eventRes, internshipRes, olympiadRes, grantRes]) => {
@@ -75,5 +76,13 @@ export class MainPage implements OnInit {
       case 'grant': return this.grants;
       default: return [];
     }
+  }
+
+  goToEvents(event: string, replaceUrl: boolean) {
+    this.router.navigate(['/events', event, { replaceUrl }])
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile'], { replaceUrl: true })
   }
 }

@@ -31,7 +31,7 @@ export class ChangePasswordPage {
 
   onSubmit() {
     if (this.form.valid) {
-      const url = 'http://109.73.194.192:8000/api/v2/auth/password/reset/';
+      const url = 'https://meldesh.kg/api/v2/auth/password/reset/';
 
       const body = {
         email: this.form.value.email,

@@ -31,7 +31,7 @@ export class LoginPage {
     if (this.form.valid) {
       const formData = this.form.value;
 
-      this.http.post('http://109.73.194.192:8000/api/v1/auth/login/', formData)
+      this.http.post('https://meldesh.kg/api/v1/auth/login/', formData)
         .subscribe({
           next: async (response: any) => {
             const { access, refresh, user } = response;
@@ -45,5 +45,13 @@ export class LoginPage {
           }
         });
     }
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register'], { replaceUrl: true })
+  }
+
+  goToForgotPassword() {
+    this.router.navigate(['/change-password'])
   }
 }

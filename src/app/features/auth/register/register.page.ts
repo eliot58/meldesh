@@ -42,11 +42,15 @@ export class RegisterPage {
         type: value.group
       };
 
-      this.http.post('http://109.73.194.192:8000/api/v1/auth/registration/', body)
+      this.http.post('https://meldesh.kg/api/v1/auth/registration/', body)
         .subscribe({
           next: (response) => this.router.navigate(['/verify']),
           error: (error) => console.log(error)
       });
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login'], { replaceUrl: true })
   }
 }

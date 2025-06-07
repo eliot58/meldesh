@@ -6,14 +6,14 @@
 
 
 <ng-template #contentLoaded>
-    <ion-content class="main-page" [scrollY]="false">
+    <ion-content [scrollY]="false">
         <div class="container">
             <div class="header-section">
                 <div class="greeting-texts">
                     <h2 class="greeting">Привет, {{name}}</h2>
                     <p class="subtitle">Найди своё будущее вместе с нами</p>
                 </div>
-                <span class="material-icons notification-icon" [routerLink]="['/events', 'unviewed']">notifications</span>
+                <span class="material-icons notification-icon" (click)="goToEvents('unviewed', false)">notifications</span>
             </div>
     
     
@@ -24,7 +24,7 @@
     
             <div class="section-header">
                 <h3 class="section-title">Мероприятия</h3>
-                <a [routerLink]="['/events', 'event']" class="see-all-link">Смотреть все</a>
+                <a (click)="goToEvents('event', false)" class="see-all-link">Смотреть все</a>
             </div>
     
             <swiper-container [modules]="swiperModules" [slidesPerView]="1" [loop]="true">
@@ -81,10 +81,10 @@
             <ion-button fill="clear" disabled>
                 <span class="material-icons active">school</span>
             </ion-button>
-            <ion-button fill="clear" [routerLink]="['/events', 'course']">
+            <ion-button fill="clear" (click)="goToEvents('course', true)">
                 <span class="material-icons-outlined">menu_book</span>
             </ion-button>
-            <ion-button fill="clear" [routerLink]="['/profile']">
+            <ion-button fill="clear" (click)="goToProfile()">
                 <span class="material-icons-outlined">person</span>
             </ion-button>
         </div>

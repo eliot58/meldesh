@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IonContent, IonInput, IonButton, IonHeader, IonFooter, IonToolbar, IonTitle } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -20,7 +20,8 @@ export class EventsPage {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -38,12 +39,12 @@ export class EventsPage {
       'Authorization': `Bearer ${token}`
     });
 
-    let url = `http://109.73.194.192:8000/api/v1/events/?limit=4&types_event=${type}`;
+    let url = `https://meldesh.kg/api/v1/events/?limit=4&types_event=${type}`;
 
     if (type === 'favorite') {
-      url = `http://109.73.194.192:8000/api/v1/favorites?limit=4`;
+      url = `https://meldesh.kg/api/v1/favorites?limit=4`;
     } else if (type === 'unviewed') {
-      url = `http://109.73.194.192:8000/api/v1/events/unviewed?limit=4`;
+      url = `https://meldesh.kg/api/v1/events/unviewed?limit=4`;
     }
     
     this.http.get<any>(url, { headers }).subscribe((response) => {
@@ -62,6 +63,14 @@ export class EventsPage {
       default:
         return 'Курсы';
     }
+  }
+
+  goToHome() {
+    this.router.navigate(['/'], { replaceUrl: true })
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile'], { replaceUrl: true })
   }
 
 }

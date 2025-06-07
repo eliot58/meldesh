@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content class="events-page">
+<ion-content>
   <div class="container">
     <div class="input-wrapper" *ngIf="type === 'course' || type === 'event'">
       <span class="material-icons-outlined input-icon start">search</span>
@@ -33,13 +33,13 @@
 <ion-footer *ngIf="type === 'course'">
   <ion-toolbar class="bottom-app-bar">
     <div class="bottom-nav">
-      <ion-button fill="clear" [routerLink]="['/']">
+      <ion-button fill="clear" (click)="goToHome()">>
         <span class="material-icons-outlined">school</span>
       </ion-button>
       <ion-button fill="clear" disabled>
         <span class="material-icons active">menu_book</span>
       </ion-button>
-      <ion-button fill="clear" [routerLink]="['/profile']">
+      <ion-button fill="clear" (click)="goToProfile()">>
         <span class="material-icons-outlined">person</span>
       </ion-button>
     </div>

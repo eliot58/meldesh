@@ -34,7 +34,7 @@ export class EventPage implements OnInit {
       Authorization: `Bearer ${token}`,
     });
 
-    this.http.get(`http://109.73.194.192:8000/api/v1/events/${id}/`, { headers })
+    this.http.get(`https://meldesh.kg/api/v1/events/${id}/`, { headers })
       .subscribe((event) => {
         this.event = event;
       });

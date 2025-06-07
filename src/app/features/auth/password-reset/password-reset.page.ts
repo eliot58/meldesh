@@ -46,7 +46,7 @@ export class PasswordResetPage {
         email: this.email
       };
 
-      this.http.post('http://109.73.194.192:8000/api/v2/auth/password/reset/confirm/', body)
+      this.http.post('https://meldesh.kg/api/v2/auth/password/reset/confirm/', body)
         .subscribe({
           next: (res) => {
             alert("Пароль успешно сброшен")

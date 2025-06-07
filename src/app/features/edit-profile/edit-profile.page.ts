@@ -58,7 +58,7 @@ export class EditProfilePage implements OnInit {
       type: this.form.value.group,
     };
 
-    this.http.put('http://109.73.194.192:8000/api/v1/auth/user/', body, { headers })
+    this.http.put('https://meldesh.kg/api/v1/auth/user/', body, { headers })
       .subscribe({
         next: async (updatedUser) => {
           await this.authService.setUser(updatedUser);

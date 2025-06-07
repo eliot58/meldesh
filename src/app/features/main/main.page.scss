@@ -1,87 +1,80 @@
-.main-page {
+.header-section {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
+}
 
-    .header-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
+.greeting-texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.subtitle {
+    margin: 4px 0 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.notification-icon {
+    font-size: 24px;
+    color: grey;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 5px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.see-all-link {
+    font-size: 14px;
+    color: #3880ff;
+    text-decoration: none;
+}
+
+
+ion-segment {
+    background: #fff;
+    margin-top: 10px;
+}
+
+ion-segment-button {
+    color: #000;
+
+    &.segment-button-checked {
+        color: #2196f3 !important;
     }
+}
 
-    .greeting-texts {
-        display: flex;
-        flex-direction: column;
+.scrollable-cards {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    padding-bottom: 150px;
+    overflow-y: auto;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
     }
-
-    .greeting {
-        margin: 0;
-        font-size: 1.4rem;
-        font-weight: bold;
-    }
-
-    .subtitle {
-        margin: 4px 0 0;
-        font-size: 1rem;
-        color: #666;
-    }
-
-    .notification-icon {
-        font-size: 24px;
-        color: grey;
-        background-color: #fff;
-        padding: 8px;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-        cursor: pointer;
-    }
-
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 10px 5px;
-    }
-
-    .section-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin: 0;
-    }
-
-    .see-all-link {
-        font-size: 14px;
-        color: #3880ff;
-        text-decoration: none;
-    }
-
-
-    ion-segment {
-        background: #fff;
-        margin-top: 10px;
-    }
-
-    ion-segment-button {
-        color: #000;
-
-        &.segment-button-checked {
-            color: #2196f3 !important;
-        }
-    }
-
-    .scrollable-cards {
-        max-height: calc(100vh - 300px);
-        overflow-y: auto;
-        padding-bottom: 150px;
-        overflow-y: auto;
-
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
 }

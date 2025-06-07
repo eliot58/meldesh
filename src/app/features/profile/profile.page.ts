@@ -9,7 +9,7 @@ import { IonContent, IonHeader, IonToolbar, IonTitle, IonFooter, IonButton, IonI
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonToolbar, CommonModule, RouterModule, IonTitle, IonItem, IonLabel, IonFooter, IonButton,]
+  imports: [IonContent, IonHeader, IonToolbar, CommonModule, IonTitle, IonItem, IonLabel, IonFooter, IonButton, RouterModule]
 })
 export class ProfilePage {
   constructor(
@@ -28,7 +28,14 @@ export class ProfilePage {
   
   async onLogout() {
     this.authService.clearTokens();
-    this.router.navigate(["/login"])
+    this.router.navigate(["/login"], { replaceUrl: true })
   }
-  
+
+  goToHome() {
+    this.router.navigate(['/'], { replaceUrl: true })
+  }
+
+  goToEvents(event: string, replaceUrl: boolean) {
+    this.router.navigate(['/events', event, { replaceUrl }])
+  }
 }

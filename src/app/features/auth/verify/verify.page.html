@@ -1,4 +1,4 @@
-<ion-content class="verify-page">
+<ion-content>
   <div class="container">
     <div class="icon-wrapper">
       <span class="material-icons-outlined mail">mail</span>
@@ -20,7 +20,7 @@
       </ion-button>
 
       <div class="auth-text">
-        <span>Уже подтвердили почту? <a href="#">Войти</a></span>
+        <span>Уже подтвердили почту? <a (click)="goToLogin()">Войти</a></span>
       </div>      
     </form>
   </div>
