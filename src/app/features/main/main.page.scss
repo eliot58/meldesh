@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 40px 0px 20px;
 }
 
 .greeting-texts {
@@ -58,6 +58,7 @@ ion-segment {
 }
 
 ion-segment-button {
+    font-size: 12px;
     color: #000;
 
     &.segment-button-checked {

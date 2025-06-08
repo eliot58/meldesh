@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonInput, IonButton, IonSegment, IonSegmentButton, IonLabel, IonFooter, IonToolbar } from '@ionic/angular/standalone';
 import { IonicSlides } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
   standalone: true,
-  imports: [IonContent, IonInput, IonButton, IonSegment, IonSegmentButton, IonLabel, IonFooter, IonToolbar,  CommonModule, FormsModule],
+  imports: [IonContent, IonInput, IonButton, IonSegment, IonSegmentButton, IonLabel, IonFooter, IonToolbar,  CommonModule, FormsModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MainPage implements OnInit {

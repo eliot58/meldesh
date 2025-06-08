@@ -62,9 +62,19 @@ body {
 
 .container {
   height: 100%;
-  background: #F3F5FD;
-  padding: 15px;
+  padding: 0px 15px;
 }
+
+ion-content {
+  --background: #F3F5FD;
+}
+
+ion-header.header-md {
+  --box-shadow: none;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
 
 ion-toolbar {
   --background: #F3F5FD;
