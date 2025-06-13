@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IonContent, IonInput, IonButton, IonHeader, IonFooter, IonToolbar, IonTitle } from '@ionic/angular/standalone';
-import { AuthService } from 'src/app/shared/service/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonTitle, IonInput, IonButtons } from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-events',
   templateUrl: './events.page.html',
   styleUrls: ['./events.page.scss'],
   standalone: true,
-  imports: [IonContent, IonInput, IonButton,  IonHeader, IonFooter, IonToolbar, IonTitle, CommonModule, FormsModule, RouterModule]
+  imports: [IonContent, IonButton,  IonHeader, IonFooter, IonToolbar, IonTitle, IonInput, CommonModule, FormsModule, RouterModule, IonButtons]
 })
 export class EventsPage {
   events: any[] = [];
@@ -20,9 +20,47 @@ export class EventsPage {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController
   ) {}
+
+  searchText: string = '';
+  isSearchFocused: boolean = false;
+  searchResults: any[] = [];
+  searchDebounce: any;
+
+  onSearchInput() {
+    clearTimeout(this.searchDebounce);
+    this.searchDebounce = setTimeout(async () => {
+      if (this.searchText.trim()) {
+        await this.fetchSearchResults(this.searchText.trim());
+      } else {
+        this.searchResults = [];
+      }
+    }, 500);
+  }
+
+  async fetchSearchResults(query: string) {
+    let url = `https://meldesh.kg/api/v1/events/?limit=10&query=${encodeURIComponent(query)}`;
+    
+    if (this.type === 'course' || this.type === 'event') {
+      url += `&types_event=${this.type}`;
+    }
+    
+    this.http.get<any>(url).subscribe({
+      next: (res: any) => {
+        this.searchResults = res.results || [];
+      },
+      error: () => {
+        this.searchResults = [];
+      }
+    });
+  }
+  
+
+  onSearchBlur() {
+    setTimeout(() => this.isSearchFocused = false, 300);
+  }
 
   async ngOnInit() {
     this.type = this.route.snapshot.paramMap.get('type');
@@ -33,21 +71,15 @@ export class EventsPage {
 
   async fetchEvents(type: string) {
 
-    const token = await this.authService.getAccessToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    let url = `https://meldesh.kg/api/v1/events/?limit=4&types_event=${type}`;
+    let url = `https://meldesh.kg/api/v1/events/?limit=10&types_event=${type}`;
 
     if (type === 'favorite') {
-      url = `https://meldesh.kg/api/v1/favorites?limit=4`;
+      url = `https://meldesh.kg/api/v1/favorites?limit=10`;
     } else if (type === 'unviewed') {
-      url = `https://meldesh.kg/api/v1/events/unviewed?limit=4`;
+      url = `https://meldesh.kg/api/v1/events/unviewed?limit=10`;
     }
     
-    this.http.get<any>(url, { headers }).subscribe((response) => {
+    this.http.get<any>(url).subscribe((response) => {
       this.events = response.results || response;
     });
   }
@@ -71,6 +103,10 @@ export class EventsPage {
 
   goToProfile() {
     this.router.navigate(['/profile'], { replaceUrl: true })
+  }
+
+  goBack() {
+    this.navCtrl.back()
   }
 
 }

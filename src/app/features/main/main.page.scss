@@ -1,13 +1,19 @@
+.main-page {
+    padding: 0px 15px;
+    padding-top: env(safe-area-inset-top);
+}
+
 .header-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 40px 0px 20px;
+    margin: 10px 0px;
 }
 
 .greeting-texts {
     display: flex;
     flex-direction: column;
+    color: #000 !important;
 }
 
 .greeting {
@@ -32,6 +38,76 @@
     cursor: pointer;
 }
 
+.search-row {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.input-wrapper {
+    width: 100%;
+}
+
+.filter-button {
+    background: #3880ff;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+}
+
+.categories-scroll {
+    display: flex;
+    overflow-x: auto;
+    padding: 0 8px;
+    margin-top: 10px;
+    gap: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+  
+    ion-chip {
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+  }
+  
+
+.search-results {
+    margin-top: 10px;
+    max-height: 100%;
+    overflow-y: auto;
+    padding-bottom: 80px;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.search-result-item+.search-result-item {
+    margin-top: 10px;
+}
+
+.no-results {
+    padding: 10px;
+    text-align: center;
+    color: gray;
+}
+
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -43,6 +119,7 @@
     font-size: 18px;
     font-weight: bold;
     margin: 0;
+    color: #000 !important;
 }
 
 .see-all-link {
@@ -51,9 +128,7 @@
     text-decoration: none;
 }
 
-
 ion-segment {
-    background: #fff;
     margin-top: 10px;
 }
 
@@ -66,11 +141,10 @@ ion-segment-button {
     }
 }
 
-.scrollable-cards {
-    max-height: calc(100vh - 300px);
+.event-list {
+    max-height: calc(100% - 300px);
     overflow-y: auto;
     padding-bottom: 150px;
-    overflow-y: auto;
 
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -79,3 +153,72 @@ ion-segment-button {
         display: none;
     }
 }
+
+.event-card-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 120px;
+    border-radius: 12px;
+    background: #fff;
+    color: #000 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    .unviewed {
+        position: absolute; 
+        top: 10px; 
+        right: 10px; 
+        padding: 5px; 
+        background-color: red; 
+        border-radius: 8px;
+    }
+  
+    .event-info {
+      flex: 1;
+      margin: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  
+      .event-title {
+        font-weight: 500;
+        font-size: 14px;
+        margin: 0 0 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    
+      .event-deadline {
+        font-size: 12px;
+        margin: 4px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #888;
+      }
+  
+      .like-button {
+        color: red;
+      }
+    }
+  
+    .event-image {
+      width: 40%;
+      height: 100%;
+      flex-shrink: 0;
+  
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: left;
+        border-radius: 12px 0px 0px 12px;
+      }
+    }
+  }

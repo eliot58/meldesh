@@ -19,11 +19,13 @@ export class ProfilePage {
 
   name: string | null = null;
   email: string | null = null;
+  group: string | null = null;
 
   async ionViewWillEnter() {
     const user = await this.authService.getUser();
     this.name = user.full_name;
     this.email = user.email;
+    this.group = this.getGroupName(user.type);
   }
   
   async onLogout() {
@@ -37,5 +39,16 @@ export class ProfilePage {
 
   goToEvents(event: string, replaceUrl: boolean) {
     this.router.navigate(['/events', event, { replaceUrl }])
+  }
+
+  getGroupName(type: string): string {
+    switch (type) {
+      case 'school':
+        return 'школьник(ца)';
+      case 'student':
+        return 'студент(ка)';
+      default:
+        return 'другое';
+    }
   }
 }

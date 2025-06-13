@@ -6,35 +6,92 @@
 
 
 <ng-template #contentLoaded>
-    <ion-content [scrollY]="false">
-        <div class="container">
-            <div class="header-section">
+    <ion-content scrollY="false">
+        <div class="main-page">
+            <div class="header-section" *ngIf="!isSearchFocused">
                 <div class="greeting-texts">
                     <h2 class="greeting">Привет, {{name}}</h2>
                     <p class="subtitle">Найди своё будущее вместе с нами</p>
                 </div>
-                <span class="material-icons notification-icon" (click)="goToEvents('unviewed', false)">notifications</span>
+                <span class="material-icons notification-icon"
+                    (click)="goToEvents('unviewed', false)">notifications</span>
             </div>
-    
-            <div class="input-wrapper">
-                <span class="material-icons-outlined input-icon start">search</span>
-                <ion-input type="text" placeholder="Поиск" class="custom-input"></ion-input>
+
+            <div class="search-row">
+                <div class="input-wrapper">
+                    <span class="material-icons-outlined input-icon start">search</span>
+                    <ion-input type="text" placeholder="Поиск" class="custom-input" [(ngModel)]="searchText"
+                        (ionFocus)="isSearchFocused = true" (ionBlur)="onSearchBlur()"
+                        (ionInput)="onSearchInput()"></ion-input>
+                </div>
+
+                <button class="filter-button" (click)="toggleCategories()">
+                    <span class="material-icons-outlined">
+                        tune
+                    </span>
+                </button>
             </div>
-    
-            <div class="section-header">
+
+            <div *ngIf="showCategories" class="categories-scroll">
+                <ion-chip [outline]="selectedCategory !== 'all'" (click)="selectCategory('all')">
+                    <ion-label>Все</ion-label>
+                </ion-chip>
+                <ion-chip [outline]="selectedCategory !== 'internship'" (click)="selectCategory('internship')">
+                    <ion-label>Стажировки</ion-label>
+                </ion-chip>
+                <ion-chip [outline]="selectedCategory !== 'grant'" (click)="selectCategory('grant')">
+                    <ion-label>Стипендии</ion-label>
+                </ion-chip>
+                <ion-chip [outline]="selectedCategory !== 'olympiad'" (click)="selectCategory('olympiad')">
+                    <ion-label>Олимпиады</ion-label>
+                </ion-chip>
+                <ion-chip [outline]="selectedCategory !== 'course'" (click)="selectCategory('course')">
+                    <ion-label>Курсы</ion-label>
+                </ion-chip>
+                <ion-chip [outline]="selectedCategory !== 'event'" (click)="selectCategory('event')">
+                    <ion-label>Мероприятия</ion-label>
+                </ion-chip>
+            </div>
+
+
+            <div *ngIf="isSearchFocused" class="search-results">
+                <div *ngIf="searchResults.length === 0">
+                    <p class="no-results">Ничего не найдено</p>
+                </div>
+                <div *ngFor="let result of searchResults" class="search-result-item">
+                    <div class="event-card">
+                        <div class="event-info">
+                            <h3 class="event-title">{{ result.title }}</h3>
+                            <div>
+                                <p class="event-company">Компания: {{ result.company || 'Не указано' }}</p>
+                                <p class="event-deadline">Дедлайн: {{ result.deadline || 'Неизвестен' }}</p>
+                                <ion-button size="small" fill="outline" class="details-button"
+                                    [routerLink]="['/event', result.event_id]">Подробнее</ion-button>
+                            </div>
+                        </div>
+                        <div class="event-image">
+                            <img [src]="result.image" alt="Картинка события" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header" *ngIf="!isSearchFocused">
                 <h3 class="section-title">Мероприятия</h3>
                 <a (click)="goToEvents('event', false)" class="see-all-link">Смотреть все</a>
             </div>
-    
-            <swiper-container [modules]="swiperModules" [slidesPerView]="1" [loop]="true">
+
+            <swiper-container [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [spaceBetween]="16"
+                *ngIf="!isSearchFocused">
                 <swiper-slide *ngFor="let event of events">
                     <div class="event-card">
                         <div class="event-info">
                             <h3 class="event-title">{{ event.title }}</h3>
-                            <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
-                            <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
-                            <ion-button size="small" fill="outline" class="details-button"
-                                [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+                            <div>
+                                <p class="event-deadline">Дата: {{ event.deadline || 'Неизвестен' }}</p>
+                                <ion-button size="small" fill="outline" class="details-button"
+                                    [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+                            </div>
                         </div>
                         <div class="event-image">
                             <img [src]="event.image" alt="Картинка события" />
@@ -42,30 +99,38 @@
                     </div>
                 </swiper-slide>
             </swiper-container>
-    
-            <ion-segment [(ngModel)]="selectedTab" class="custom-tabs">
-                <ion-segment-button value="grant">
-                    <ion-label>Стипендии</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="internship">
-                    <ion-label>Стажировки</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="olympiad">
-                    <ion-label>Олимпиады</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-    
-            <div class="scrollable-cards">
-                <div *ngFor="let event of currentEvents" class="event-card" style="margin-top: 10px;">
-                    <div class="event-info">
-                        <h3 class="event-title">{{ event.title }}</h3>
-                        <p class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
-                        <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
-                        <ion-button size="small" fill="outline" class="details-button"
-                            [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
-                    </div>
+        </div>
+
+        <ion-segment [(ngModel)]="selectedTab" class="custom-tabs" mode="md" *ngIf="!isSearchFocused">
+            <ion-segment-button value="grant">
+                <ion-label>Стипендии</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="internship">
+                <ion-label>Стажировки</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="olympiad">
+                <ion-label>Олимпиады</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+
+        <div style="height: 100%; padding: 0px 15px;">
+            <div class="event-list" *ngIf="!isSearchFocused" (scroll)="onInfiniteScroll($event)">
+                <div *ngFor="let event of currentEvents" class="event-card-2"
+                    style="margin-top: 10px; position: relative;" [routerLink]="['/event', event.event_id]">
+                    <div class="unviewed" *ngIf="!event.event_view"></div>
                     <div class="event-image">
                         <img [src]="event.image" alt="Картинка события" />
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">{{ event.title }}</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
+                            <button class="like-button" (click)="toggleFavorite(event); $event.stopPropagation()">
+                                <span class="material-icons-outlined">
+                                    {{ event.event_view && event.event_view.is_liked ? 'favorite' : 'favorite_border' }}
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

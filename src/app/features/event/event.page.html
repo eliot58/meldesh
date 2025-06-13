@@ -11,9 +11,11 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <button class="like-button">
-        <span class="material-icons-outlined">favorite_border</span>
-      </button>
+      <button class="like-button" (click)="toggleFavorite()">
+        <span class="material-icons-outlined">
+          {{ event.event_view.is_liked ? 'favorite' : 'favorite_border' }}
+        </span>
+      </button>      
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +34,7 @@
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="event">
   <ion-toolbar>
     <ion-button expand="block" fill="solid" (click)="openExternalLink()">
       Перейти

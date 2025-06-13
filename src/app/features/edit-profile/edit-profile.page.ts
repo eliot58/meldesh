@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
 // import { IonContent, IonHeader, IonToolbar, IonButtons, IonTitle, IonButton, IonSelect, IonSelectOption, NavController} from '@ionic/angular/standalone';
 import { IonicModule, NavController } from '@ionic/angular';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-profile',
@@ -48,17 +48,13 @@ export class EditProfilePage implements OnInit {
     const token = await this.authService.getAccessToken();
     if (!token) return;
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
     const body = {
       full_name: this.form.value.fullName,
       age: this.form.value.age,
       type: this.form.value.group,
     };
 
-    this.http.put('https://meldesh.kg/api/v1/auth/user/', body, { headers })
+    this.http.put('https://meldesh.kg/api/v1/auth/user/', body)
       .subscribe({
         next: async (updatedUser) => {
           await this.authService.setUser(updatedUser);

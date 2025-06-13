@@ -3,10 +3,31 @@ h2 {
     font-weight: bold;
     margin-bottom: 8px;
     margin-top: 200px;
+    color: #000 !important;
 }
 
 .subtitle {
     margin-bottom: 24px;
+    color: #000 !important;
+}
+
+ion-button {
+    position: relative;
+    color: #fff;
+    background-color: #407eeb;
+    --border-radius: 32px;
+    border-radius: 32px;
+    --border-style: none;
+    --padding: 5px 0px;
+
+    span {
+        position: absolute; 
+        right: 0;
+        background-color: #fff;
+        padding: 5px;
+        border-radius: 32px;
+        color: #407eeb;
+    }
 }
 
 .forgot-password {
@@ -18,4 +39,8 @@ h2 {
         color: #2196f3;
         text-decoration: none;
     }
+}
+
+.input-wrapper {
+    margin-bottom: 15px;
 }

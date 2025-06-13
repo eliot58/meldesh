@@ -15,6 +15,7 @@
       </div>
       <h2 class="name">{{ name }}</h2>
       <p class="email">{{ email }}</p>
+      <p class="group">{{ group }}</p>
     </div>
 
     <div class="list-menu">
@@ -45,13 +46,13 @@
   <ion-toolbar class="bottom-app-bar">
     <div class="bottom-nav">
       <ion-button fill="clear" (click)="goToHome()">
-        <span class="material-icons-outlined">school</span>
+        <span class="icons material-icons-outlined">school</span>
       </ion-button>
       <ion-button fill="clear" (click)="goToEvents('course', true)">
-        <span class="material-icons-outlined">menu_book</span>
+        <span class="icons material-icons-outlined">menu_book</span>
       </ion-button>
       <ion-button fill="clear" disabled>
-        <span class="material-icons active">person</span>
+        <span class="icons material-icons active">person</span>
       </ion-button>
     </div>
   </ion-toolbar>

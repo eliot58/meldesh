@@ -50,5 +50,5 @@ export const routes: Routes = [
     path: 'event/:id',
     loadComponent: () => import('./features/event/event.page').then( m => m.EventPage),
     canActivate: [authGuard]
-  },
+  }
 ];

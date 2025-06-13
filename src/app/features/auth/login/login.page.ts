@@ -38,7 +38,7 @@ export class LoginPage {
             await this.authService.setAccessToken(access);
             await this.authService.setRefreshToken(refresh);
             await this.authService.setUser(user)
-            this.router.navigate(['/'])
+            this.router.navigate(['/'], { replaceUrl: true })
           },
           error: (error) => {
             console.error('Login failed:', error);

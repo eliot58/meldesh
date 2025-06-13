@@ -1,3 +1,7 @@
+.like-button {
+    color: red;
+}
+
 .event-image {
     width: 100%;
     height: auto;
@@ -8,6 +12,7 @@
 .event-title {
     font-size: 22px;
     margin-bottom: 12px;
+    color: #000;
 }
 
 .event-description {
@@ -24,5 +29,8 @@
 ion-footer {
     ion-button {
         margin: 12px 16px;
+        color: #fff;
+        background-color: #407eeb;
+        border-radius: 8px;
     }
 }
