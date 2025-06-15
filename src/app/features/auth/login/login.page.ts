@@ -16,6 +16,8 @@ import { IonContent, IonInput, IonButton } from '@ionic/angular/standalone';
 export class LoginPage {
   showPassword = false;
 
+  serverErrors: { [key: string]: string[] } = {};
+
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -28,6 +30,8 @@ export class LoginPage {
   }
 
   onSubmit() {
+    this.serverErrors = {};
+
     if (this.form.valid) {
       const formData = this.form.value;
 
@@ -41,7 +45,9 @@ export class LoginPage {
             this.router.navigate(['/'], { replaceUrl: true })
           },
           error: (error) => {
-            console.error('Login failed:', error);
+            if (error.status === 400 && error.error) {
+              this.serverErrors = error.error;
+            }
           }
         });
     }

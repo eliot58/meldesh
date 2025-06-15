@@ -1,3 +1,26 @@
+ion-content::part(scroll) {
+    top: -20px;
+}
+
+.search-row {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+
+    .back-button {
+        background-color: rgb(204, 202, 202);
+        margin-right: 5px;
+    
+        span {
+            font-size: 18px;
+        }
+    }    
+}
+
+.input-wrapper {
+    width: 100%;
+}
+
 .search-results {
     margin-top: 10px;
     max-height: 100%;

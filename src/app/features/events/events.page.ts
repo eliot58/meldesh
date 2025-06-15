@@ -11,21 +11,26 @@ import { NavController } from '@ionic/angular';
   templateUrl: './events.page.html',
   styleUrls: ['./events.page.scss'],
   standalone: true,
-  imports: [IonContent, IonButton,  IonHeader, IonFooter, IonToolbar, IonTitle, IonInput, CommonModule, FormsModule, RouterModule, IonButtons]
+  imports: [IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonTitle, IonInput, CommonModule, FormsModule, RouterModule, IonButtons]
 })
 export class EventsPage {
   events: any[] = [];
   type: string | null = null;
+
+  pageSize = 8;
+  nextUrl: string | null = null;
+  loading = false;
+
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
     private navCtrl: NavController
-  ) {}
+  ) { }
 
   searchText: string = '';
-  isSearchFocused: boolean = false;
+  searchMode: boolean = false;
   searchResults: any[] = [];
   searchDebounce: any;
 
@@ -41,12 +46,12 @@ export class EventsPage {
   }
 
   async fetchSearchResults(query: string) {
-    let url = `https://meldesh.kg/api/v1/events/?limit=10&query=${encodeURIComponent(query)}`;
-    
+    let url = `https://meldesh.kg/api/v1/events/?limit=8&query=${encodeURIComponent(query)}`;
+
     if (this.type === 'course' || this.type === 'event') {
       url += `&types_event=${this.type}`;
     }
-    
+
     this.http.get<any>(url).subscribe({
       next: (res: any) => {
         this.searchResults = res.results || [];
@@ -56,11 +61,6 @@ export class EventsPage {
       }
     });
   }
-  
-
-  onSearchBlur() {
-    setTimeout(() => this.isSearchFocused = false, 300);
-  }
 
   async ngOnInit() {
     this.type = this.route.snapshot.paramMap.get('type');
@@ -69,18 +69,38 @@ export class EventsPage {
     }
   }
 
-  async fetchEvents(type: string) {
-
-    let url = `https://meldesh.kg/api/v1/events/?limit=10&types_event=${type}`;
-
+  async fetchEvents(type: string, append = false) {
+    this.loading = true;
+  
+    let url = this.nextUrl || `https://meldesh.kg/api/v1/events/?limit=${this.pageSize}&types_event=${type}`;
+  
     if (type === 'favorite') {
-      url = `https://meldesh.kg/api/v1/favorites?limit=10`;
+      url = this.nextUrl || `https://meldesh.kg/api/v1/favorites?limit=${this.pageSize}`;
     } else if (type === 'unviewed') {
-      url = `https://meldesh.kg/api/v1/events/unviewed?limit=10`;
+      url = this.nextUrl || `https://meldesh.kg/api/v1/events/unviewed?limit=${this.pageSize}`;
     }
-    
-    this.http.get<any>(url).subscribe((response) => {
-      this.events = response.results || response;
+  
+    this.http.get<any>(url).subscribe({
+      next: (res) => {
+        const results = res.results || res;
+        this.events = append ? [...this.events, ...results] : results;
+        this.nextUrl = res.next || null;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+  onInfiniteScroll(event: any) {
+    if (this.loading || !this.nextUrl) {
+      event.target.complete();
+      return;
+    }
+  
+    this.fetchEvents(this.type!, true).then(() => {
+      event.target.complete();
     });
   }
 

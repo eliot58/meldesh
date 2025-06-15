@@ -23,7 +23,11 @@
 
 .event-deadline {
     font-size: 14px;
-    color: #888;
+    color: #000;
+
+    span {
+        font-weight: 600;
+    }
 }
 
 ion-footer {

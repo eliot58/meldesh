@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 export class RegisterPage {
   showPassword = false;
 
+  serverErrors: { [key: string]: string[] } = {};
+
   form = this.fb.group({
     fullName: ['', Validators.required],
     age: ['', [Validators.required, Validators.min(1)]],
@@ -22,15 +24,24 @@ export class RegisterPage {
     password: ['', Validators.required],
     passwordConfirm: ['', Validators.required],
     group: ['', Validators.required],
-  });
+  }, { validators: this.passwordsMatchValidator });
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {}
+
+  passwordsMatchValidator(form: any) {
+    const password = form.get('password')?.value;
+    const confirm = form.get('passwordConfirm')?.value;
+    return password === confirm ? null : { passwordMismatch: true };
+  }
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
+    this.serverErrors = {};
+
     if (this.form.valid) {
       const value = this.form.value;
       const body = {
@@ -42,10 +53,13 @@ export class RegisterPage {
         type: value.group
       };
 
-      this.http.post('https://meldesh.kg/api/v1/auth/registration/', body)
-        .subscribe({
-          next: (response) => this.router.navigate(['/verify']),
-          error: (error) => console.log(error)
+      this.http.post('https://meldesh.kg/api/v1/auth/registration/', body).subscribe({
+        next: () => this.router.navigate(['/verify']),
+        error: (error) => {
+          if (error.status === 400 && error.error) {
+            this.serverErrors = error.error; 
+          }
+        }
       });
     }
   }

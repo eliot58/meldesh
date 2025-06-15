@@ -20,6 +20,12 @@ import { IonicSlides } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import {
+  PushNotifications,
+  Token,
+  PushNotificationSchema,
+  ActionPerformed,
+} from '@capacitor/push-notifications';
 
 type TabType = 'internship' | 'grant' | 'olympiad';
 
@@ -67,29 +73,42 @@ export class MainPage implements OnInit {
     olympiad: { items: [], nextUrl: null, loading: false },
   };
 
+  unviewedInfo = {
+    internship: 0,
+    grant: 0,
+    olympiad: 0,
+    event: 0,
+    course: 0
+  }
+
+  get hasUnviewedEvents(): boolean {
+    return Object.values(this.unviewedInfo).some(count => count > 0);
+  }
+
   events: any[] = [];
-  pageSize = 6;
+  pageSize = 8;
   name: string | null = null;
 
   // Поиск
   searchText: string = '';
-  isSearchFocused: boolean = false;
+  searchMode: boolean = false;
   searchResults: any[] = [];
   searchDebounce: any;
+
+  onSearchFocus(){
+    this.searchMode = true;
+    this.onSearchInput()
+  }
 
   onSearchInput() {
     clearTimeout(this.searchDebounce);
     this.searchDebounce = setTimeout(async () => {
-      if (this.searchText.trim()) {
-        await this.fetchSearchResults(this.searchText.trim());
-      } else {
-        this.searchResults = [];
-      }
+      await this.fetchSearchResults(this.searchText.trim());
     }, 500);
   }
 
   async fetchSearchResults(query: string) {
-    let url = `https://meldesh.kg/api/v1/events/?limit=10&query=${encodeURIComponent(query)}`;
+    let url = `https://meldesh.kg/api/v1/events/?limit=${this.pageSize}&query=${encodeURIComponent(query)}`;
     if (this.selectedCategory !== 'all') {
       url += `&types_event=${encodeURIComponent(this.selectedCategory)}`;
     }
@@ -104,10 +123,6 @@ export class MainPage implements OnInit {
     });
   }
 
-  onSearchBlur() {
-    setTimeout(() => (this.isSearchFocused = false), 300);
-  }
-
   showCategories = false;
   selectedCategory = 'all';
 
@@ -116,7 +131,9 @@ export class MainPage implements OnInit {
   }
 
   selectCategory(category: string) {
+    this.searchMode = true
     this.selectedCategory = category;
+    this.onSearchInput()
   }
 
   get currentEvents() {
@@ -124,6 +141,33 @@ export class MainPage implements OnInit {
   }
 
   ngOnInit() {
+
+    PushNotifications.requestPermissions().then(result => {
+      if (result.receive === 'granted') {
+        PushNotifications.register();
+      } else {
+        alert('Push permission not granted');
+      }
+    });
+
+    PushNotifications.addListener('registration',
+      (token: Token) => {
+        this.sendDeviceTokenToBackend(token.value);
+      }
+    );
+
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        this.router.navigate(['/event', notification.notification.data.event_id])
+      }
+    );
+
     this.authService.getUser().then((user) => {
       this.name = user.full_name;
 
@@ -139,7 +183,31 @@ export class MainPage implements OnInit {
           },
         });
 
+      this.http
+        .get<any>(`https://meldesh.kg/api/v1/events/unviewed_count`)
+        .subscribe({
+          next: (res) => {
+            this.unviewedInfo.internship = res.internship;
+            this.unviewedInfo.grant = res.grant;
+            this.unviewedInfo.course = res.course;
+            this.unviewedInfo.event = res.event;
+            this.unviewedInfo.olympiad = res.olympiad;
+          },
+        });
+
       this.isLoading = false;
+    });
+  }
+
+  private sendDeviceTokenToBackend(token: string) {
+    const apiUrl = 'https://meldesh.kg/api/v1/devices/token/';
+    this.http.post(apiUrl, { device_token: token }).subscribe({
+      next: (response) => {
+        console.log('Device token sent successfully', response);
+      },
+      error: (err) => {
+        console.error('Failed to send device token', err);
+      }
     });
   }
 
@@ -202,6 +270,25 @@ export class MainPage implements OnInit {
   goToProfile() {
     this.router.navigate(['/profile'], { replaceUrl: true });
   }
+
+  goToEvent(event: any) {
+    const key = event.types_event as keyof typeof this.unviewedInfo;
+
+    if (!event.event_view) {
+      event.event_view = {
+        is_liked: false,
+        is_viewed: true
+      };
+      this.unviewedInfo[key] = Math.max(0, this.unviewedInfo[key] - 1);
+    } else if (!event.event_view.is_viewed) {
+      event.event_view.is_viewed = true;
+      this.unviewedInfo[key] = Math.max(0, this.unviewedInfo[key] - 1);
+    }
+
+    this.router.navigate(['/event', event.event_id]);
+  }
+
+
 
   toggleFavorite(event: any) {
     const id = event.event_id;

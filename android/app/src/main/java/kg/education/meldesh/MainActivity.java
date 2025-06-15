@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package kg.education.meldesh;
 
 import com.getcapacitor.BridgeActivity;
 

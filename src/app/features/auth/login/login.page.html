@@ -9,6 +9,10 @@
         <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input">
         </ion-input>
       </div>
+      <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        <small *ngIf="form.get('email')?.errors?.['required']">Введите email</small>
+        <small *ngIf="form.get('email')?.errors?.['email']">Некорректный email</small>
+      </div>
 
       <div class="input-wrapper">
         <span class="material-icons-outlined input-icon start">lock</span>
@@ -17,6 +21,12 @@
         <span class="material-icons-outlined input-icon end" (click)="togglePasswordVisibility()">
           {{ showPassword ? 'visibility_off' : 'visibility' }}
         </span>
+      </div>
+      <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+        <small *ngIf="form.get('password')?.errors?.['required']">Введите пароль</small>
+      </div>
+      <div class="error" *ngIf="serverErrors['non_field_errors']">
+        <small *ngFor="let err of serverErrors['non_field_errors']">{{ err }}</small>
       </div>
 
       <div class="forgot-password">
