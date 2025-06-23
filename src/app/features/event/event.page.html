@@ -29,14 +29,14 @@
       {{ event.description }}
     </p>
     <p class="event-deadline">
-      <span>Дедлайн:</span> {{ event.deadline || 'Неизвестен' }}
-    </p>
+      <span>{{ event.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }}</span> {{ event.deadline || 'Неизвестен' }}
+    </p>    
   </div>
 </ion-content>
 
 <ion-footer *ngIf="event">
   <ion-toolbar>
-    <ion-button expand="block" fill="solid" (click)="openExternalLink()">
+    <ion-button expand="block" mode="ios" (click)="openExternalLink()">
       Перейти
     </ion-button>
   </ion-toolbar>

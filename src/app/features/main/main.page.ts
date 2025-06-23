@@ -14,7 +14,7 @@ import {
   IonFooter,
   IonToolbar,
   IonInput,
-  IonChip
+  Platform
 } from '@ionic/angular/standalone';
 import { IonicSlides } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
@@ -23,9 +23,9 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import {
   PushNotifications,
   Token,
-  PushNotificationSchema,
   ActionPerformed,
 } from '@capacitor/push-notifications';
+import { Subscription } from 'rxjs';
 
 type TabType = 'internship' | 'grant' | 'olympiad';
 
@@ -51,8 +51,7 @@ interface PageState {
     IonToolbar,
     CommonModule,
     FormsModule,
-    RouterModule,
-    IonChip
+    RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -60,7 +59,8 @@ export class MainPage implements OnInit {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) { }
 
   swiperModules = [IonicSlides];
@@ -95,7 +95,9 @@ export class MainPage implements OnInit {
   searchResults: any[] = [];
   searchDebounce: any;
 
-  onSearchFocus(){
+  backButtonSub?: Subscription;
+
+  onSearchFocus() {
     this.searchMode = true;
     this.onSearchInput()
   }
@@ -141,7 +143,8 @@ export class MainPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.initBackButtonBehavior();
+    
     PushNotifications.requestPermissions().then(result => {
       if (result.receive === 'granted') {
         PushNotifications.register();
@@ -196,6 +199,20 @@ export class MainPage implements OnInit {
         });
 
       this.isLoading = false;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.backButtonSub) {
+      this.backButtonSub.unsubscribe();
+    }
+  }
+
+  initBackButtonBehavior() {
+    this.backButtonSub = this.platform.backButton.subscribeWithPriority(10, () => {
+      if (this.searchMode) {
+        this.searchMode = false;
+      }
     });
   }
 

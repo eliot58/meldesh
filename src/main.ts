@@ -5,6 +5,9 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/shared/interceptor/auth.interceptor';
+import { initialize } from '@capacitor-community/safe-area';
+
+initialize();
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,4 +16,11 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
+}).then(() => {
+  const splash = document.getElementById('custom-splash');
+  if (splash) {
+    setTimeout(() => {
+      splash.style.display = 'none';
+    }, 2000);
+  }
 });

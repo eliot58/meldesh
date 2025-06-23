@@ -41,7 +41,9 @@
             <h3 class="event-title">{{ result.title }}</h3>
             <div>
               <p class="event-company" *ngIf="result.types_event === 'course'">Компания: {{ result.company || 'Не указано' }}</p>
-              <p class="event-deadline">Дедлайн: {{ result.deadline || 'Неизвестен' }}</p>
+              <p class="event-deadline">
+                {{ result.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }} {{ result.deadline || 'Неизвестен' }}
+              </p>              
               <ion-button size="small" fill="outline" class="details-button"
                 [routerLink]="['/event', result.event_id]">Подробнее</ion-button>
             </div>
@@ -59,7 +61,9 @@
           <h3 class="event-title">{{ event.title }}</h3>
           <div>
             <p *ngIf="event.types_event === 'course'" class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
-            <p class="event-deadline">Дедлайн: {{ event.deadline || 'Неизвестен' }}</p>
+            <p class="event-deadline">
+              {{ event.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }} {{ event.deadline || 'Неизвестен' }}
+            </p>            
             <ion-button size="small" fill="outline" class="details-button"
               [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
           </div>
@@ -79,8 +83,8 @@
       <ion-button fill="clear" (click)="goToHome()">
         <span class="material-icons-outlined">school</span>
       </ion-button>
-      <ion-button fill="clear" disabled>
-        <span class="material-icons active">menu_book</span>
+      <ion-button fill="clear" class="active" disabled>
+        <span class="material-icons">menu_book</span>
       </ion-button>
       <ion-button fill="clear" (click)="goToProfile()">
         <span class="material-icons-outlined">person</span>
