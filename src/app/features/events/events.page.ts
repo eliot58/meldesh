@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonTitle, IonInput, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonHeader, IonToolbar, IonTitle, IonInput, IonButtons } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
   templateUrl: './events.page.html',
   styleUrls: ['./events.page.scss'],
   standalone: true,
-  imports: [IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonTitle, IonInput, CommonModule, FormsModule, RouterModule, IonButtons]
+  imports: [IonContent, IonButton, IonHeader, IonToolbar, IonTitle, IonInput, CommonModule, FormsModule, RouterModule, IonButtons]
 })
 export class EventsPage {
   events: any[] = [];
@@ -63,6 +63,7 @@ export class EventsPage {
   }
 
   async ngOnInit() {
+    console.log("sdasd")
     this.type = this.route.snapshot.paramMap.get('type');
     if (this.type) {
       await this.fetchEvents(this.type);

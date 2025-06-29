@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/service/auth.service';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonFooter, IonButton, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonItem, IonLabel } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonToolbar, CommonModule, IonTitle, IonItem, IonLabel, IonFooter, IonButton, RouterModule]
+  imports: [IonContent, IonHeader, IonToolbar, CommonModule, IonTitle, IonItem, IonLabel, RouterModule]
 })
 export class ProfilePage {
   constructor(

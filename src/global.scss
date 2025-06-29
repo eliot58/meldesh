@@ -60,10 +60,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-ion-header ion-toolbar:first-of-type {
-  padding-top: var(--safe-area-inset-top);
-}
-
 .container {
   height: 100%;
   padding-left: 15px;
@@ -249,34 +245,4 @@ ion-title {
       border-radius: 0 12px 12px 0;
     }
   }
-}
-
-.bottom-app-bar {
-  --background: #fff;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
-  padding: 0;
-  height: 64px;
-}
-
-
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.bottom-nav .material-icons-outlined {
-  font-size: 24px;
-  color: #888;
-}
-
-.bottom-nav ion-button.active {
-  background-color: #3880ff;
-  border-radius: 8px;
-  opacity: 1;
-}
-
-.bottom-nav ion-button.active span{
-  color: #ffffff;
 }

@@ -5,9 +5,6 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/shared/interceptor/auth.interceptor';
-import { initialize } from '@capacitor-community/safe-area';
-
-initialize();
 
 bootstrapApplication(AppComponent, {
   providers: [

@@ -25,9 +25,9 @@
     <img class="event-image" [src]="event.image" alt="Изображение курса" />
 
     <h2 class="event-title">{{event.title}}</h2>
-    <p class="event-description">
-      {{ event.description }}
-    </p>
+
+    <div class="event-description" [innerHTML]="event.description"></div>
+
     <p class="event-deadline">
       <span>{{ event.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }}</span> {{ event.deadline || 'Неизвестен' }}
     </p>    
