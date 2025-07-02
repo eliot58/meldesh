@@ -13,13 +13,13 @@
     width: 100%;
 }
 
-.bottom-nav .material-icons-outlined {
+.bottom-nav ion-button span {
     font-size: 24px;
     color: #888;
 }
 
 .bottom-nav ion-button.active {
-    background-color: #3880ff;
+    background-color: #2196F3;
     border-radius: 8px;
     opacity: 1;
 }

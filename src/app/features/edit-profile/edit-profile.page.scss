@@ -9,7 +9,7 @@
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #2196f3;
+    background-color: #2196F3;
     color: white;
     display: flex;
     justify-content: center;
@@ -25,7 +25,7 @@
 
 ion-button {
     color: #fff;
-    background-color: #407eeb;
+    --background: #2196F3;
     border-radius: 8px;
     margin-top: 10px;
 }

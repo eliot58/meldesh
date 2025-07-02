@@ -50,6 +50,10 @@ html {
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+html {
+  --ion-safe-area-top: 44px;
+}
+
 html,
 body {
   height: 100%;
@@ -221,7 +225,7 @@ ion-title {
     .details-button {
       width: 100%;
       color: #fff;
-      background-color: #407eeb;
+      --background: #2196F3;
       border-radius: 8px;
       --border-style: none;
       margin-right: 10px;

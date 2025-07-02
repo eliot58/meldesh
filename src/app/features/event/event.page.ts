@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonButtons, IonTitle } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonHeader, IonFooter, IonToolbar, IonButtons, IonTitle, Platform } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event',
@@ -18,10 +19,25 @@ export class EventPage implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private platform: Platform
   ) {}
 
   event: any;
+
+  backButtonSub?: Subscription;
+
+  ngOnDestroy() {
+    if (this.backButtonSub) {
+      this.backButtonSub.unsubscribe();
+    }
+  }
+
+  initBackButtonBehavior() {
+    this.backButtonSub = this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.back();
+    });
+  }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -30,6 +46,8 @@ export class EventPage implements OnInit {
       .subscribe((event) => {
         this.event = event;
       });
+
+    this.initBackButtonBehavior();
   }
 
   getEventTitle(type: string): string {

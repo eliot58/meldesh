@@ -18,6 +18,10 @@ ion-card-title {
     --color: #000;
 }
 
+ion-toggle {
+    --track-background-checked: #2196F3;
+}
+
 ion-item {
     display: flex !important;
     align-items: center !important;
@@ -27,6 +31,6 @@ ion-item {
 
 .icon {
     font-size: 24px;
-    color: #1976d2;
+    color: #2196F3;
     margin-right: 16px;
 }

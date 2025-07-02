@@ -52,6 +52,10 @@ export class HomePage {
   ) { }
 
   swiperModules = [IonicSlides];
+
+  @ViewChild('swiperRef') swiperRef: ElementRef | undefined;
+
+  tabOrder: TabType[] = ['grant', 'internship', 'olympiad'];
   selectedTab: TabType = 'grant';
   isLoading = true;
 
@@ -77,18 +81,6 @@ export class HomePage {
   pageSize = 8;
   name: string | null = null;
 
-  // Поиск
-  searchText: string = '';
-  searchMode: boolean = false;
-  searchResults: any[] = [];
-  searchDebounce: any;
-
-  backButtonSub?: Subscription;
-
-  @ViewChild('swiperRef') swiperRef: ElementRef | undefined;
-
-  tabOrder: TabType[] = ['grant', 'internship', 'olympiad'];
-
   getTabIndex(tab: TabType): number {
     return this.tabOrder.indexOf(tab);
   }
@@ -100,12 +92,35 @@ export class HomePage {
   onSegmentChanged() {
     const index = this.getTabIndex(this.selectedTab);
     this.swiperRef?.nativeElement.swiper.slideTo(index);
-  }  
+  }
 
   onSlideChanged() {
     const index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
     this.selectedTab = this.getTabByIndex(index);
-  }  
+  }
+
+  showCategories = false;
+  selectedCategory = 'all';
+
+  toggleCategories() {
+    this.showCategories = !this.showCategories;
+  }
+
+  selectCategory(category: string) {
+    this.searchMode = true
+    this.selectedCategory = category;
+    this.onSearchInput()
+  }
+
+  searchText: string = '';
+  searchMode: boolean = false;
+  searchResults: any[] = [];
+  searchNextUrl: string | null = null;
+  searchLoading = false;
+
+  searchDebounce: any;
+
+  backButtonSub?: Subscription;
 
   onSearchFocus() {
     this.searchMode = true;
@@ -124,41 +139,28 @@ export class HomePage {
     if (this.selectedCategory !== 'all') {
       url += `&types_event=${encodeURIComponent(this.selectedCategory)}`;
     }
-
+  
     this.http.get<any>(url).subscribe({
       next: (res) => {
         this.searchResults = res.results || [];
+        this.searchNextUrl = res.next;
+        this.searchLoading = false;
       },
       error: () => {
         this.searchResults = [];
+        this.searchNextUrl = null;
+        this.searchLoading = false;
       },
     });
   }
 
-  showCategories = false;
-  selectedCategory = 'all';
-
-  toggleCategories() {
-    this.showCategories = !this.showCategories;
-  }
-
-  selectCategory(category: string) {
-    this.searchMode = true
-    this.selectedCategory = category;
-    this.onSearchInput()
-  }
-
-  get currentEvents() {
-    return this.pageInfo[this.selectedTab].items;
-  }
-
-  ngOnInit() {
+  init() {
     this.loadData();
     this.initBackButtonBehavior();
     this.initPushNotifications();
   }
 
-  initPushNotifications (){
+  initPushNotifications() {
     PushNotifications.requestPermissions().then(result => {
       if (result.receive === 'granted') {
         PushNotifications.register();
@@ -260,7 +262,46 @@ export class HomePage {
     });
   }
 
-  loadPaginatedData(type: TabType, event?: any) {
+  onSearchScroll(event: any) {
+    const element = event.target;
+    const threshold = 50;
+
+    if (element.scrollHeight - element.scrollTop <= element.clientHeight + threshold) {
+      this.loadMoreSearchData();
+    }
+  }
+
+  loadMoreSearchData() {
+    if (this.searchLoading || !this.searchNextUrl) {
+      return;
+    }
+
+    this.searchLoading = true;
+
+    this.http.get<any>(this.searchNextUrl).subscribe({
+      next: (res) => {
+        const newResults = res.results || [];
+        this.searchResults.push(...newResults);
+        this.searchNextUrl = res.next;
+        this.searchLoading = false;
+      },
+      error: () => {
+        this.searchLoading = false;
+      },
+    });
+  }
+
+  onTabScroll(event: any) {
+    const element = event.target;
+
+    const threshold = 50;
+
+    if (element.scrollHeight - element.scrollTop <= element.clientHeight + threshold) {
+      this.loadMoreTabData(this.selectedTab);
+    }
+  }
+
+  loadMoreTabData(type: TabType, event?: any) {
     const pageData = this.pageInfo[type];
 
     if (pageData.loading || pageData.nextUrl === null) {
@@ -284,16 +325,6 @@ export class HomePage {
         if (event) event.target.complete();
       },
     });
-  }
-
-  onInfiniteScroll(event: any) {
-    const element = event.target;
-
-    const threshold = 50;
-
-    if (element.scrollHeight - element.scrollTop <= element.clientHeight + threshold) {
-      this.loadPaginatedData(this.selectedTab);
-    }
   }
 
   goToEvents(event: string, replaceUrl: boolean) {

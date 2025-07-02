@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, QueryList, ViewChild, ViewChildren,
 } from '@angular/core';
 import {
   IonContent,
@@ -31,7 +31,33 @@ import { CommonModule } from '@angular/common';
 export class MainPage {
   selectedTab: 'home' | 'course' | 'profile' = 'home';
 
-  selectTab(tab: 'home' | 'course' | 'profile') {
+  @ViewChildren(HomePage) homePages!: QueryList<HomePage>;
+  @ViewChildren(EventsPage) eventsPages!: QueryList<EventsPage>;
+  @ViewChildren(ProfilePage) profilePages!: QueryList<ProfilePage>;
+
+  ngAfterViewInit() {
+    this.callViewWillEnter(this.selectedTab);
+  }
+
+  async selectTab(tab: 'home' | 'course' | 'profile') {
     this.selectedTab = tab;
+
+    setTimeout(() => {
+      this.callViewWillEnter(tab);
+    });
+  }
+
+  private async callViewWillEnter(tab: string) {
+    switch (tab) {
+      case 'home':
+        this.homePages.first?.init?.();
+        break;
+      case 'course':
+        await this.eventsPages.first?.init?.('course');
+        break;
+      case 'profile':
+        await this.profilePages.first?.init?.();
+        break;
+    }
   }
 }

@@ -5,11 +5,11 @@
 </ng-container>
 
 <ng-template #contentLoaded>
-    <ion-content scrollY="false">
-        <div class="home-page">
+    <ion-header >
+        <ion-toolbar>
             <div class="header-section" *ngIf="!searchMode">
                 <div class="greeting-texts">
-                    <h2 class="greeting">Привет, {{name}}</h2>
+                    <h2 class="greeting">Привет, {{ name }}</h2>
                     <p class="subtitle">Найди своё будущее вместе с нами</p>
                 </div>
                 <span class="material-icons notification-icon" style="position: relative;"
@@ -18,7 +18,10 @@
                     <span *ngIf="hasUnviewedEvents" class="unviewed"></span>
                 </span>
             </div>
-
+        </ion-toolbar>
+    </ion-header>
+    <ion-content scrollY="false">
+        <div class="home-page">
             <div class="search-row">
                 <div class="input-wrapper">
                     <span class="material-icons-outlined input-icon start">search</span>
@@ -76,9 +79,7 @@
                 </ion-button>
             </div>
 
-
-
-            <div *ngIf="searchMode" class="search-results">
+            <div *ngIf="searchMode" class="search-results" (scroll)="onSearchScroll($event)">
                 <div *ngIf="searchResults.length === 0 && searchText">
                     <p class="no-results">Ничего не найдено</p>
                 </div>
@@ -91,10 +92,13 @@
                         <div class="event-info">
                             <h3 class="event-title">{{ result.title }}</h3>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <p class="event-deadline">
-                                    {{ result.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }} {{ result.deadline ||
-                                    'Неизвестен' }}
-                                </p>
+                                <div>
+                                    <p *ngIf="result.types_event === 'course'" class="event-company">Компания: {{ result.company || 'Не указано' }}</p>
+                                    <p class="event-deadline">
+                                        {{ result.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }} {{ result.deadline ||
+                                        'Неизвестен' }}
+                                    </p>
+                                </div>
                                 <button class="like-button" (click)="toggleFavorite(result); $event.stopPropagation()">
                                     <span class="material-icons-outlined">
                                         {{ result.event_view && result.event_view.is_liked ? 'favorite' :
@@ -155,9 +159,9 @@
         </ion-segment>
 
         <swiper-container #swiperRef [slidesPerView]="1" [initialSlide]="getTabIndex(selectedTab)"
-            (swiperslidechange)="onSlideChanged()" style="height: 100%; padding: 0px 15px;">
+            (swiperslidechange)="onSlideChanged()" style="height: 100%; padding: 0px 15px;" *ngIf="!searchMode">
             <swiper-slide *ngFor="let tab of tabOrder">
-                <div class="event-list" (scroll)="onInfiniteScroll($event)">
+                <div class="event-list" (scroll)="onTabScroll($event)">
                     <div *ngFor="let event of pageInfo[tab].items" class="event-card-2"
                         style="margin-top: 10px; position: relative;" (click)="goToEvent(event)">
                         <div class="unviewed" *ngIf="!event.event_view"></div>
@@ -179,7 +183,5 @@
                 </div>
             </swiper-slide>
         </swiper-container>
-
-
     </ion-content>
 </ng-template>

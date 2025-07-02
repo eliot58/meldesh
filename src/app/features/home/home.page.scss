@@ -7,6 +7,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 10px 0px;
+    padding: 0px 15px;
 }
 
 .greeting-texts {
@@ -49,7 +50,6 @@
 .search-row {
     display: flex;
     align-items: center;
-    margin-top: 20px;
 }
 
 .input-wrapper {
@@ -57,7 +57,7 @@
 }
 
 .filter-button {
-    background: #3880ff;
+    background: #2196F3;
     color: #fff;
     border: none;
     padding: 8px;
@@ -97,13 +97,13 @@
         gap: 4px;
 
         &.selected {
-            --background: #3880ff;
+            --background: #2196F3;
             --color: #fff;
         }
 
         &.unselected {
             --background: #fff;
-            --color: #3880ff;
+            --color: #2196F3;
         }
     }
 }
@@ -150,7 +150,7 @@
 
 .see-all-link {
     font-size: 14px;
-    color: #3880ff;
+    color: #2196F3;
     text-decoration: none;
 }
 
@@ -164,7 +164,8 @@ ion-segment-button {
     color: #000;
 
     &.segment-button-checked {
-        color: #2196f3 !important;
+        color: #2196F3;
+        --indicator-color: #2196F3;
     }
 
     .segment-notification-badge {
@@ -241,6 +242,7 @@ ion-segment-button {
             text-overflow: ellipsis;
         }
 
+        .event-company,
         .event-deadline {
             font-size: 12px;
             margin: 4px 0;

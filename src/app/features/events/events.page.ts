@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { IonContent, IonButton, IonHeader, IonToolbar, IonTitle, IonInput, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonHeader, IonToolbar, IonTitle, IonInput, IonButtons, Platform } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -26,13 +27,34 @@ export class EventsPage {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private platform: Platform
   ) { }
 
   searchText: string = '';
   searchMode: boolean = false;
   searchResults: any[] = [];
   searchDebounce: any;
+
+  backButtonSub?: Subscription;
+
+  ngOnDestroy() {
+    if (this.backButtonSub) {
+      this.backButtonSub.unsubscribe();
+    }
+  }
+
+  initBackButtonBehavior() {
+    this.backButtonSub = this.platform.backButton.subscribeWithPriority(10, () => {
+      if (this.searchMode) {
+        this.searchMode = false;
+      } else {
+        if (this.type === 'event' || this.type === 'favorite' || this.type === 'unviewed') {
+          this.navCtrl.back()
+        }
+      }
+    });
+  }
 
   onSearchInput() {
     clearTimeout(this.searchDebounce);
@@ -62,12 +84,20 @@ export class EventsPage {
     });
   }
 
-  async ngOnInit() {
-    console.log("sdasd")
+  async ionViewWillEnter() {
     this.type = this.route.snapshot.paramMap.get('type');
     if (this.type) {
       await this.fetchEvents(this.type);
     }
+    this.initBackButtonBehavior();
+  }
+
+  async init(type: string) {
+    this.type = type;
+    if (this.type) {
+      await this.fetchEvents(this.type);
+    }
+    this.initBackButtonBehavior();
   }
 
   async fetchEvents(type: string, append = false) {

@@ -21,7 +21,7 @@ export class ProfilePage {
   email: string | null = null;
   group: string | null = null;
 
-  async ionViewWillEnter() {
+  async init() {
     const user = await this.authService.getUser();
     this.name = user.full_name;
     this.email = user.email;

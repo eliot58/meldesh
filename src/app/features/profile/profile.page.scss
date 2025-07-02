@@ -14,7 +14,7 @@
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #2196f3;
+    background-color: #2196F3;
     color: white;
     display: flex;
     justify-content: center;
@@ -25,10 +25,9 @@
 }
 
 .name {
-    color: #3880ff;
+    color: #2196F3;
     font-size: 20px;
     font-weight: 600;
-    margin: 8px 0 4px;
 }
 
 .email {
@@ -37,7 +36,7 @@
 }
 
 .group {
-    color: #3880ff;
+    color: #2196F3;
 }
 
 ion-item {
@@ -53,7 +52,7 @@ ion-item {
     font-size: 18px;
 
     .icons {
-        color: #2196f3;
+        color: #2196F3;
         font-size: 24px;
     }
 }
