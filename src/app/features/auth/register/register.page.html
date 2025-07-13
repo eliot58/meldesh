@@ -1,0 +1,86 @@
+<ion-content [scrollY]="false">
+  <div class="container">
+    <h2>Добро пожаловать</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">person</span>
+        <ion-input formControlName="fullName" type="text" placeholder="ФИО" class="custom-input"></ion-input>
+      </div>
+      <div class="error" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+        <small *ngIf="form.get('fullName')?.errors?.['required']">ФИО обязательно</small>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">calendar_today</span>
+        <ion-input formControlName="age" type="number" placeholder="Возраст" class="custom-input"></ion-input>
+      </div>
+      <div class="error" *ngIf="form.get('age')?.touched && form.get('age')?.invalid">
+        <small *ngIf="form.get('age')?.errors?.['required']">Возраст обязателен</small>
+        <small *ngIf="form.get('age')?.errors?.['min']">Возраст должен быть положительным</small>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">group</span>
+        <ion-select formControlName="group" placeholder="Тип пользователя" class="custom-input">
+          <ion-select-option value="school">школьник(ца)</ion-select-option>
+          <ion-select-option value="student">студент(ка)</ion-select-option>
+          <ion-select-option value="other">другое</ion-select-option>
+        </ion-select>
+      </div>
+      <div class="error" *ngIf="form.get('group')?.touched && form.get('group')?.invalid">
+        <small *ngIf="form.get('group')?.errors?.['required']">Тип пользователя обязателен</small>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">mail</span>
+        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input"></ion-input>
+      </div>
+      <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        <small *ngIf="form.get('email')?.errors?.['required']">Email обязателен</small>
+        <small *ngIf="form.get('email')?.errors?.['email']">Некорректный email</small>
+      </div>
+      <div class="error" *ngIf="serverErrors['email']">
+        <small *ngFor="let err of serverErrors['email']">{{ err }}</small>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">lock</span>
+        <ion-input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Пароль" class="custom-input"></ion-input>
+        <span class="material-icons-outlined input-icon end" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+      </div>
+      <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+        <small *ngIf="form.get('password')?.errors?.['required']">Пароль обязателен</small>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">lock</span>
+        <ion-input formControlName="passwordConfirm" [type]="showPassword ? 'text' : 'password'" placeholder="Повторите пароль" class="custom-input"></ion-input>
+        <span class="material-icons-outlined input-icon end" (click)="togglePasswordVisibility()">
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+      </div>
+      <div class="error" *ngIf="form.get('passwordConfirm')?.touched && form.get('passwordConfirm')?.invalid">
+        <small *ngIf="form.get('passwordConfirm')?.errors?.['required']">Подтвердите пароль</small>
+      </div>
+      <div class="error" *ngIf="form.errors?.['passwordMismatch'] && form.get('passwordConfirm')?.touched">
+        <small>Пароли не совпадают</small>
+      </div>
+      <div class="error" *ngIf="serverErrors['password1']">
+        <small *ngFor="let err of serverErrors['password1']">{{ err }}</small>
+      </div>
+
+      <ion-button expand="block" mode="ios" type="submit">
+        Зарегистрироваться
+        <span class="material-icons-outlined">arrow_forward</span>
+      </ion-button>
+    </form>
+
+    <div class="auth-text">
+      <span>Уже есть аккаунт? <a (click)="goToLogin()">Войти</a></span>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-content scrollY="false">
+    <ng-container [ngSwitch]="selectedTab">
+        <ng-container *ngSwitchCase="'home'">
+            <app-home></app-home>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'course'">
+            <app-events></app-events>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'profile'">
+            <app-profile></app-profile>
+        </ng-container>
+    </ng-container>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar class="bottom-app-bar">
+        <div class="bottom-nav">
+            <ion-button [class.active]="selectedTab === 'home'" fill="clear" (click)="selectTab('home')">
+                <span class="material-icons">school</span>
+            </ion-button>
+            <ion-button [class.active]="selectedTab === 'course'" fill="clear" (click)="selectTab('course')">
+                <span class="material-icons-outlined">menu_book</span>
+            </ion-button>
+            <ion-button [class.active]="selectedTab === 'profile'" fill="clear" (click)="selectTab('profile')">
+                <span class="material-icons-outlined">person</span>
+            </ion-button>
+        </div>
+    </ion-toolbar>
+</ion-footer>

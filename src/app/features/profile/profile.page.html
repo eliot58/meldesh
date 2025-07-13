@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Профиль
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [scrollY]="false">
+  <div class="container">
+    <div class="profile-block">
+      <div class="avatar-wrapper" *ngIf="name">
+        <div class="initials-avatar">{{ name[0] }}</div>
+      </div>
+      <h2 class="name">{{ name }}</h2>
+      <p class="email">{{ email }}</p>
+      <p class="group">{{ group }}</p>
+    </div>
+
+    <div class="list-menu">
+      <ion-item button [routerLink]="['/edit-profile']">
+        <span slot="start" class="icons material-icons-outlined">edit</span>
+        <ion-label>Редактировать профиль</ion-label>
+      </ion-item>
+
+      <ion-item button [routerLink]="['/notification-settings']">
+        <span slot="start" class="icons material-icons-outlined">notifications</span>
+        <ion-label>Уведомления</ion-label>
+      </ion-item>
+
+      <ion-item button (click)="goToEvents('favorite', false)">
+        <span slot="start" class="icons material-icons-outlined">favorite_border</span>
+        <ion-label>Избранные</ion-label>
+      </ion-item>
+
+      <ion-item button (click)="onLogout()">
+        <span slot="start" class="icons material-icons-outlined">logout</span>
+        <ion-label>Выйти</ion-label>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

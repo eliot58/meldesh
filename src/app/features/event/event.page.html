@@ -1,0 +1,44 @@
+<ion-header *ngIf="event">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <button class="back-button" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+      </button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      {{ getEventTitle(event.types_event) }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <button class="like-button" (click)="toggleFavorite()">
+        <span class="material-icons-outlined">
+          {{ event.event_view.is_liked ? 'favorite' : 'favorite_border' }}
+        </span>
+      </button>      
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="event">
+  <div class="container">
+    <img class="event-image" [src]="event.image" alt="Изображение курса" />
+
+    <h2 class="event-title">{{event.title}}</h2>
+
+    <div class="event-description" [innerHTML]="event.description"></div>
+
+    <p class="event-deadline">
+      <span>{{ event.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }}</span> {{ event.deadline || 'Неизвестен' }}
+    </p>    
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="event">
+  <ion-toolbar>
+    <ion-button expand="block" mode="ios" (click)="openExternalLink()">
+      Перейти
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+

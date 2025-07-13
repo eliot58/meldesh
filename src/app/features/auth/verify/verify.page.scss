@@ -1,0 +1,50 @@
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+    color: #000 !important;
+}
+
+.subtitle {
+    margin: 10px 0px;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    color: #000 !important;
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    margin-bottom: 16px;
+}
+
+.mail {
+    font-size: 70px;
+    color: #2196F3;
+}
+
+.input-wrapper {
+    margin-bottom: 15px;
+}
+
+ion-button {
+    position: relative;
+    color: #fff;
+    --background: #2196F3;
+    --border-radius: 32px;
+    border-radius: 32px;
+    --border-style: none;
+    --padding: 5px 0px;
+
+    span {
+        position: absolute; 
+        right: 0;
+        background-color: #fff;
+        padding: 5px;
+        border-radius: 32px;
+        color: #2196F3;
+    }
+}

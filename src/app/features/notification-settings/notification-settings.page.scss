@@ -1,0 +1,36 @@
+.notification-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 10px;
+}
+
+ion-card {
+    --background: #fff;
+}
+
+ion-card-content, ion-item {
+    --background: #fff;
+    --color: #000;
+}
+
+ion-card-title {
+    --color: #000;
+}
+
+ion-toggle {
+    --track-background-checked: #2196F3;
+}
+
+ion-item {
+    display: flex !important;
+    align-items: center !important;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+}
+
+.icon {
+    font-size: 24px;
+    color: #2196F3;
+    margin-right: 16px;
+}

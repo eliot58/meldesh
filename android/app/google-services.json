@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "534127317619",
+    "project_id": "meldesh-e3b0d",
+    "storage_bucket": "meldesh-e3b0d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534127317619:android:5d6b7cba5bde1031aa5006",
+        "android_client_info": {
+          "package_name": "kg.education.meldesh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSBfNRT4GYtzLk_BSg8_eIu9_bmfDrYnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

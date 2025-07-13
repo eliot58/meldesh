@@ -1,0 +1,28 @@
+<ion-content [scrollY]="false">
+  <div class="container">
+    <div class="icon-wrapper">
+      <span class="material-icons-outlined mail">mail</span>
+    </div>
+    <h2>Подтвердите вашу почту</h2>
+    <p class="subtitle">Перейдите по ссылке в письме</p>
+    <p class="subtitle">Если письмо не пришло, вы можете запросить повторную отправку</p>
+    <p class="subtitle">При успешном подтверждении перейдите в экран для входа</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">mail</span>
+        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input">
+        </ion-input>
+      </div>
+
+      <ion-button expand="block" mode="ios" type="submit">
+        Снова отправить письмо
+        <span class="material-icons-outlined">arrow_forward</span>
+      </ion-button>
+
+      <div class="auth-text">
+        <span>Уже подтвердили почту? <a (click)="goToLogin()">Войти</a></span>
+      </div>      
+    </form>
+  </div>
+</ion-content>

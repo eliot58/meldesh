@@ -1,0 +1,29 @@
+.bottom-app-bar {
+    --background: #fff;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    height: 64px;
+}
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.bottom-nav ion-button span {
+    font-size: 24px;
+    color: #888;
+}
+
+.bottom-nav ion-button.active {
+    background-color: #2196F3;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.bottom-nav ion-button.active span {
+    color: #ffffff;
+}

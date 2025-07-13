@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <button class="back-button" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+      </button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      Настройки уведомлений
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <div style="width: 40px;"></div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollY]="false">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Уведомления</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>
+          <h2>Разрешить уведомления</h2>
+          <p>Получайте важные обновления о стипендиях, стажировках и других возможностях</p>
+        </ion-label>
+        <ion-toggle slot="end" mode="ios" [(ngModel)]="notificationsEnabled" name="notificationsEnabled"></ion-toggle>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>О уведомлениях</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Разрешив уведомления, вы будете получать информацию о:</p>
+      <ion-list lines="none" class="notification-list">
+        <ion-item>
+          <span class="material-icons-outlined icon">school</span>
+          <ion-label>Новых стипендиях</ion-label>
+        </ion-item>
+        <ion-item>
+          <span class="material-icons-outlined icon">work</span>
+          <ion-label>Новых стажировках</ion-label>
+        </ion-item>
+        <ion-item>
+          <span class="material-icons-outlined icon">emoji_events</span>
+          <ion-label>Новых олимпиадах</ion-label>
+        </ion-item>
+        <ion-item>
+          <span class="material-icons-outlined icon">event</span>
+          <ion-label>Новых событиях</ion-label>
+        </ion-item>
+        <ion-item>
+          <span class="material-icons-outlined icon">notifications</span>
+          <ion-label>Сроках подачи заявок</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

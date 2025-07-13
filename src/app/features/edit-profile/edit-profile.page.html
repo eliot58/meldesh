@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <button class="back-button" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+      </button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      Редактирование профиля
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <div style="width: 40px;"></div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [scrollY]="false">
+  <div class="container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="avatar-container">
+        <div class="avatar-wrapper">
+          <div class="initials-avatar">A</div>
+        </div>
+      </div>
+      
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">person</span>
+        <ion-input formControlName="fullName" type="text" placeholder="ФИО" class="custom-input"></ion-input>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">calendar_today</span>
+        <ion-input formControlName="age" type="number" placeholder="Возраст" class="custom-input"></ion-input>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">group</span>
+        <ion-select formControlName="group" placeholder="Тип пользователя" class="custom-input">
+          <ion-select-option value="school">школьник(ца)</ion-select-option>
+          <ion-select-option value="student">студент(ка)</ion-select-option>
+          <ion-select-option value="other">другое</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="input-wrapper">
+        <span class="material-icons-outlined input-icon start">mail</span>
+        <ion-input formControlName="email" type="email" placeholder="E-mail" class="custom-input" readonly tabindex="-1"></ion-input>
+      </div>
+
+      <ion-button expand="block" mode="ios" type="button" [routerLink]="['/change-password']">
+        Изменить пароль
+      </ion-button>
+
+      <ion-button expand="block" mode="ios" type="submit">
+        Сохранить
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

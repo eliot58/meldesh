@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="type !== 'course'">
+      <button class="back-button" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+      </button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      {{ getEventsTitle() }}
+    </ion-title>
+
+    <ion-buttons slot="end" *ngIf="type !== 'course'">
+      <div style="width: 40px;"></div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content scrollY="false">
+  <div class="container">
+    <div class="search-row">
+      <div class="input-wrapper" *ngIf="type === 'course' || type === 'event'">
+        <span class="material-icons-outlined input-icon start">search</span>
+        <ion-input type="text" placeholder="Поиск" class="custom-input" [(ngModel)]="searchText"
+          (ionFocus)="searchMode = true; searchResults = events;" (ionInput)="onSearchInput()"></ion-input>
+        <span class="material-icons-outlined input-icon end" style="padding: 7px; border-radius: 8px; right: 3px;" *ngIf="searchMode" (click)="searchMode = false">
+          close
+        </span>
+      </div>
+    </div>
+
+
+    <div *ngIf="searchMode" class="search-results">
+      <div *ngIf="searchResults.length === 0 && searchText">
+        <p class="no-results">Ничего не найдено</p>
+      </div>
+      <div *ngFor="let result of searchResults" class="search-result-item">
+        <div class="event-card">
+          <div class="event-info">
+            <h3 class="event-title">{{ result.title }}</h3>
+            <div>
+              <p class="event-company" *ngIf="result.types_event === 'course'">Компания: {{ result.company || 'Не указано' }}</p>
+              <p class="event-deadline">
+                {{ result.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }} {{ result.deadline || 'Неизвестен' }}
+              </p>              
+              <ion-button size="small" fill="outline" class="details-button"
+                [routerLink]="['/event', result.event_id]">Подробнее</ion-button>
+            </div>
+          </div>
+          <div class="event-image">
+            <img [src]="result.image" alt="Картинка события" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-list" *ngIf="!searchMode" (scroll)="onScroll($event)">
+      <div *ngFor="let event of events" class="event-card" style="margin-top: 10px;">
+        <div class="event-info">
+          <h3 class="event-title">{{ event.title }}</h3>
+          <div>
+            <p *ngIf="event.types_event === 'course'" class="event-company">Компания: {{ event.company || 'Не указано' }}</p>
+            <p class="event-deadline">
+              {{ event.types_event === 'event' ? 'Дата:' : 'Дедлайн:' }} {{ event.deadline || 'Неизвестен' }}
+            </p>            
+            <ion-button size="small" fill="outline" class="details-button"
+              [routerLink]="['/event', event.event_id]">Подробнее</ion-button>
+          </div>
+        </div>
+        <div class="event-image">
+          <img [src]="event.image" alt="Картинка события" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
